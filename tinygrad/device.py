@@ -251,7 +251,7 @@ class CompiledASTRunner(JITRunner):
       assert all(v._val is None for v in self.vars), f"ASTRunner contains bound Variable {self.vars}"
 
   def build(self, compiler, runtime):
-    self.lib = compiler.__wrapped__(self.prg) if getenv("DISABLE_COMPILER_CACHE") else compiler(self.prg)
+    self.lib = compiler.__wrapped__(self.prg) if getenv("DISABLE_COMPILER_CACHE") or getenv("METAL_XCODE") else compiler(self.prg)
     self.clprg = runtime(self.name, self.lib)
     return self
 
